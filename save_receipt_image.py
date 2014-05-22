@@ -1,17 +1,17 @@
 import os
-from refreshbooks import api
-import time
+import zipfile
 from datetime import datetime
-from datetime import date
+from refreshbooks import api
 
 #account URL, API Token, and date range applied in these fields
 url = ''
 token = ''
-date_from = datetime.strptime('01/01/14', '%m/%d/%y')
+date_from = datetime.strptime('01/01/13', '%m/%d/%y')
 date_to = datetime.today()
 
 def main_program():
     api_caller = api.TokenClient(url, token)
+    path = os.path.expanduser('~/Desktop/'+url+'_receipts/')
     receipts = []
     date = {}
     count = 1
@@ -28,7 +28,7 @@ def main_program():
                 date[expense.expense_id] = str(expense.date)[0:10]
 
     #create a directory to dump the files, move into that directory
-    ensure_dir('/users/crichard/desktop/python_practice/'+url+'_receipts/')
+    ensure_dir(path)
 
     #capture receipt file
     for receipt_id in receipts:
@@ -42,6 +42,15 @@ def main_program():
           f.write(body)
         if count % 50 == 0:
           time.sleep(1)
+
+    #create a zip file of the created directory
+    #zf = zipfile.ZipFile(url+'_receipts.zip', 'w', zipfile.ZIP_DEFLATED)
+    #rootlen = len(path) + 1
+    #for base, dirs, files in os.walk(path):
+        #for file in files:
+            #fn = os.path.join(base, file)
+            #zf.write(fn, fn[rootlen:])
+    #zf.close()
 
 def list_all(command, entity):
     page = 1
