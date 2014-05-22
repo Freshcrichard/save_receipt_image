@@ -4,8 +4,9 @@ import time
 from datetime import datetime
 from datetime import date
 
-url = 'merylmanning.freshbooks.com'
-token = '37f34002cb4eba18afc306eae952893d'
+#account URL, API Token, and date range applied in these fields
+url = ''
+token = ''
 date_from = datetime.strptime('01/01/14', '%m/%d/%y')
 date_to = datetime.today()
 
